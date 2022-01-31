@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
   load_and_authorize_resource
   def index
     @products = Product.all
+     authorize! :index, @product
   end
 
   def show
@@ -10,6 +11,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    authorize! :new, @product
   end
 
   def edit
@@ -23,6 +25,7 @@ class ProductsController < ApplicationController
     else
       render :new
     end
+    authorize! :create, @product
   end
   def update
     if @product.update(product_params)
@@ -30,6 +33,7 @@ class ProductsController < ApplicationController
     else
       render :edit
     end
+    authorize! :update, @product
   end
 
   def destroy

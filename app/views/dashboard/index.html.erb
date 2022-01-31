@@ -1,16 +1,17 @@
 <%= flash_messages %>
 <div class="block">
 	
-	<li><%= link_to "Sign up", new_user_registration_path %></li>
-	<li><%= link_to "Login", new_user_session_path %></li>
-	<li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
-	<header class="header-group">
-		<h2>Welcome to Rails Authentication, Authorization by Anusha</h2>
-		 
-	</header>
-	<%= link_to 'New Product', new_product_path, class: "btn btn-primary" %>
-	<div class="row">
-		<div class="col-md-12">
-		</div>
-	</div>
+	<% if current_user %>
+<h1>Welcome to user role <%= current_user.roles_name%>  <%= current_user.email%></h1> 
+<%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
+<% if can? :create, Product %>
+  <%= link_to 'New product', new_product_path ,class: 'btn btn-lg btn-primary'%>
+<% end %>
+<%= link_to 'products list',products_path%>
+<% else %>
+<h2>signup or signin before continue</h2>
+<%= link_to "Sign In", new_user_session_path %>
+<%= link_to  "Sign Up", new_user_registration_path %>
+<% end %>
+	<%#= render "products/index" %>
 </div>
